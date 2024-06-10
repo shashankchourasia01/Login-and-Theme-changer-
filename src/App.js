@@ -1,23 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from 'react';
+import LoginForm from './Components/Assests/LoginForm/LoginForm';
+import { ThemeProvider } from './contexts/theme';
+import ThemeBtn from './Components/ThemeBtn';
 
 function App() {
+
+  const [themeMode , setThemeMode] = useState("light")
+
+  const lightTheme = () =>{
+    setThemeMode("light")
+  }
+
+  const darkTheme = () =>{
+    setThemeMode("dark")
+  }
+
+   // Actual change in theme
+
+   useEffect(() => {
+    document.querySelector('html').classList.remove("light","dark")
+    document.querySelector('html').classList.add(themeMode)
+   }, [themeMode])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <ThemeProvider value={{themeMode, lightTheme, darkTheme}}>
+
+      <ThemeBtn />
+
+     <LoginForm />
+     
+     </ThemeProvider>
     </div>
   );
 }
